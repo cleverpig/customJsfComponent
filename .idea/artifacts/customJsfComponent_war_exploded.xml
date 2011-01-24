@@ -1,0 +1,32 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="customJsfComponent:war exploded">
+    <output-path>$PROJECT_DIR$/target/customJsfComponent</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="customJsfComponent/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="customJsfComponent" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.icefaces:icefaces:1.8.2" />
+          <element id="library" level="project" name="Maven: backport-util-concurrent:backport-util-concurrent:2.2" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.0" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2" />
+          <element id="library" level="project" name="Maven: commons-digester:commons-digester:1.8" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.1" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging-api:1.1" />
+          <element id="library" level="project" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.2" />
+          <element id="library" level="project" name="Maven: org.icefaces:icefaces-facelets:1.8.2" />
+          <element id="library" level="project" name="Maven: org.icefaces:icefaces-comps:1.8.2" />
+          <element id="library" level="project" name="Maven: javax.faces:jsf-api:1.2" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: javax.faces:jsf-impl:1.2-b19" />
+          <element id="library" level="project" name="Maven: com.sun.el:el-ri:1.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.1" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.16" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,27 @@
+2011-01-20
+编写自定义组件ticker和相应Render、Tag
+需要配置的：
+  编写facelet tag配置：WEB-INF\facelet\tags\facelet-tagblib.xml
+  在faces-config.xml中声明组件和render
+  如果使用jsp的话，则还要编写ticker.tld
+  web.xml中声明一个context-param参数,指向facelet tag配置：
+  <context-param>
+    <param-name>facelets.LIBRARIES</param-name>
+    <param-value>/WEB-INF/facelet/tags/facelet-taglib.xml</param-value>
+  </context-param>
+
+参考：
+  http://blog.evolutionarydawn.com/2009/06/11/custom-jsf-component-12/
+  http://facestutorials.icefaces.org/tutorial/facelets-tutorial.html#definecustom
+
+TODO：
+  装载javascript和message bundle资源
+
+2011-01-22
+完成：装载message bundle
+
+2011-01-24
+编写：
+  kindEditor组件：可以装载相关javascript和相关css、图片资源
+TODO:
+  加上提交按钮，显示编辑的html内容

@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.bjinfotech.extJsf</groupId>
+  <artifactId>customJsfComponent</artifactId>
+  <packaging>war</packaging>
+  <version>1.0</version>
+  <name>customJsfComponent Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <repositories>
+    <repository>
+      <id>icefaces</id>
+      <name>icefaces Repsitory</name>
+      <url>http://anonsvn.icefaces.org/repo/maven2/releases/</url>
+    </repository>
+    <repository>
+        <id>JBoss</id>
+        <name>JBoss Repsitory</name>
+        <url>http://repository.jboss.org/maven2</url>
+    </repository>
+    <repository>
+      <id>atlassian-m2-repository</id>
+      <name>atlassian m2 repository</name>
+      <url>http://maven.jahia.org/maven2</url>
+    </repository>
+  </repositories>
+
+  <!-- Shared version number properties-->
+  <properties>
+      <org.icefaces.version>1.8.2</org.icefaces.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+		<dependency>
+		  <groupId>org.icefaces</groupId>
+		  <artifactId>icefaces</artifactId>
+		  <version>${org.icefaces.version}</version>
+		  <!-- 依赖的javax.el与jsp-api的包冲突，因此把icefaces的注释掉 -->
+		  <exclusions>
+        <exclusion>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+        </exclusion>
+      </exclusions>
+		</dependency>
+
+		<dependency>
+      <groupId>org.icefaces</groupId>
+      <artifactId>icefaces-facelets</artifactId>
+      <version>${org.icefaces.version}</version>
+      <type>jar</type>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.icefaces</groupId>
+      <artifactId>icefaces-comps</artifactId>
+      <version>${org.icefaces.version}</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>javax.faces</groupId>
+    	<artifactId>jsf-api</artifactId>
+    	<version>1.2</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>servlet-api</artifactId>
+    	<version>2.5</version>
+    	<type>jar</type>
+    	<scope>provided</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>javax.servlet.jsp</groupId>
+    	<artifactId>jsp-api</artifactId>
+    	<version>2.1</version>
+    	<type>jar</type>
+    	<scope>provided</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>jstl</artifactId>
+    	<version>1.2</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>javax.faces</groupId>
+    	<artifactId>jsf-impl</artifactId>
+    	<version>1.2-b19</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>com.sun.el</groupId>
+    	<artifactId>el-ri</artifactId>
+    	<version>1.0</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-api</artifactId>
+    	<version>1.6.1</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>customJsfComponent</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

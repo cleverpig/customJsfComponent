@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:b="http://bjinfotech.com/tags">
+<f:loadBundle var="bundle" basename="com.bjinfotech.extJsf.resources"/>
+<head>
+  <title></title>
+  <style type="text/css">
+    .banner {
+      border: 1px solid darkblue;
+      padding: 5px 5px 5px 5px;
+    }
+  </style>
+
+</head>
+<body>
+  <f:view>
+    <b:ticker style="color:black;" styleClass="banner" value="#{messager.msg}"/>
+    <b:ticker style="color:black;" styleClass="banner" value="hello,world"/>
+    <b:ticker style="color:black;" styleClass="banner" value="#{bundle.banner_value}"/>
+    <b:ticker style="color:black;" styleClass="banner"/>
+  </f:view>
+</body>
+</html>
