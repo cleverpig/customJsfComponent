@@ -47,4 +47,10 @@
       <value>你好，世界</value>
     </managed-property>
   </managed-bean>
+
+  <managed-bean>
+    <managed-bean-name>KEDemo</managed-bean-name>
+    <managed-bean-class>com.bjinfotech.extJsf.backingbean.KindEditorDemo</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+ </managed-bean>
 </faces-config>

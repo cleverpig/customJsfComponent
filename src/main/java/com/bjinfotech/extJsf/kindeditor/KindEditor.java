@@ -4,6 +4,7 @@ import com.icesoft.faces.context.JarResource;
 import com.icesoft.faces.context.Resource;
 import com.icesoft.faces.context.ResourceLinker;
 import com.icesoft.faces.context.ResourceRegistry;
+import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.util.CoreUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -63,12 +64,21 @@ public class KindEditor extends UIInput {
   private String rows;
   private String cols;
   private String items;
-  private String customConfigPath;
+  private Boolean usingJQueryExt =false; //using jQuery javascript framework?
+  private String extConfigPath;
+  private Boolean disabled = null;
+  private Boolean hadCalledJavascript;
+
+  private static final String JQUERY_FRAMEWORK_JS ="com/bjinfotech/extJsf/jquery/jquery.js" ;//jQuery framework
+  private static final String ENCODER_TOOL_JS ="com/bjinfotech/extJsf/encoder/encoder.js" ; //this is a javascript encode/decode library:http://www.strictly-software.com/htmlencode
+  private static final String KIND_EDITOR_JQUERY_EXT_JS ="com/bjinfotech/extJsf/kindeditor/kindeditor-jquery-ext.js" ;//kindeditor config & call function with jQuery and Encoder library's power
+
 
   public KindEditor() {
     instanceExist =true;
     baseURI=null;
     setRendererType(KIND_EDITOR_COMPONENT_RENDER_TYPE);
+    hadCalledJavascript=false;
   }
 
   /**
@@ -142,12 +152,23 @@ public class KindEditor extends UIInput {
 
   private static final Resource KIND_EDITOR_RESOURCE=new KindEditorJarResource(KIND_EDITOR_JS);
 
-  public static void loadJavaScript(){
+  public void loadJavaScript(){
     if (FacesContext.getCurrentInstance()!=null && baseURI==null && instanceExist){
       ResourceRegistry registry= (ResourceRegistry) FacesContext.getCurrentInstance();
+
       if (registry!=null){
         baseURI=registry.loadJavascriptCode(KIND_EDITOR_RESOURCE,KIND_EDITOR_LINKED_BASE);
         log.debug("baseURI:"+baseURI);
+
+        if (extConfigPath!=null && extConfigPath.length()>0){
+          usingJQueryExt=true;
+//          JavascriptContext.includeLib(getExtConfigPath(),FacesContext.getCurrentInstance());
+        }
+        if (usingJQueryExt){
+          registry.loadJavascriptCode(new KindEditorJarResource(JQUERY_FRAMEWORK_JS));
+          registry.loadJavascriptCode(new KindEditorJarResource(ENCODER_TOOL_JS));
+          registry.loadJavascriptCode(new KindEditorJarResource(KIND_EDITOR_JQUERY_EXT_JS));
+        }
       }
       else
         log.fatal("转换ResourceRegistry失败");
@@ -171,10 +192,10 @@ public class KindEditor extends UIInput {
     return KIND_EDITOR_COMPONENT_RENDER_TYPE;
   }
 
-  private String getValueBindWithDefaultValue(String name,String defaultValue){
+  private Object getValueBindingWithDefaultValue(String name, Object defaultValue){
     try {
       Field field=KindEditor.class.getDeclaredField(name);
-      String fieldValue= (String) field.get(this);
+      Object fieldValue= field.get(this);
       if (fieldValue!=null){
         return fieldValue;
       }
@@ -187,7 +208,7 @@ public class KindEditor extends UIInput {
           return ve.getExpressionString();
         }
         else{
-          return (String) ve.getValue(getFacesContext().getELContext());
+          return ve.getValue(getFacesContext().getELContext());
         }
       }
     } catch (Exception e) {
@@ -198,22 +219,7 @@ public class KindEditor extends UIInput {
   }
 
   public String getWidth() {
-    return getValueBindWithDefaultValue("width",DEFAULT_WIDTH);
-//    if (width!=null){
-//      return width;
-//    }
-//    else{
-//      ValueExpression ve=getValueExpression("width");
-//      if (ve==null){
-//        return DEFAULT_WIDTH;
-//      }
-//      if (ve.isLiteralText()){
-//        return ve.getExpressionString();
-//      }
-//      else{
-//        return (String) ve.getValue(getFacesContext().getELContext());
-//      }
-//    }
+    return (String) getValueBindingWithDefaultValue("width", DEFAULT_WIDTH);
   }
 
   public void setWidth(String width) {
@@ -221,7 +227,7 @@ public class KindEditor extends UIInput {
   }
 
   public String getHeight() {
-    return getValueBindWithDefaultValue("height",DEFAULT_HEIGHT);
+    return (String) getValueBindingWithDefaultValue("height", DEFAULT_HEIGHT);
   }
 
   public void setHeight(String height) {
@@ -229,7 +235,7 @@ public class KindEditor extends UIInput {
   }
 
   public String getSkin() {
-    return getValueBindWithDefaultValue("skin",DEFAULT_SKIN);
+    return (String) getValueBindingWithDefaultValue("skin", DEFAULT_SKIN);
   }
 
   public void setSkin(String skin) {
@@ -237,7 +243,7 @@ public class KindEditor extends UIInput {
   }
 
   public String getRows() {
-    return getValueBindWithDefaultValue("rows",DEFAULT_ROWS);
+    return (String) getValueBindingWithDefaultValue("rows", DEFAULT_ROWS);
   }
 
   public void setRows(String rows) {
@@ -245,7 +251,7 @@ public class KindEditor extends UIInput {
   }
 
   public String getCols() {
-    return getValueBindWithDefaultValue("cols",DEFAULT_COLS);
+    return (String) getValueBindingWithDefaultValue("cols", DEFAULT_COLS);
   }
 
   public void setCols(String cols) {
@@ -253,44 +259,82 @@ public class KindEditor extends UIInput {
   }
 
   public String getItems() {
-    return getValueBindWithDefaultValue("items",DEFAULT_ITEMS);
+    return (String) getValueBindingWithDefaultValue("items", DEFAULT_ITEMS);
   }
 
   public void setItems(String items) {
     this.items = items;
   }
 
-  public String getCustomConfigPath() {
-    if (customConfigPath!=null){
-      return CoreUtils.resolveResourceURL(getFacesContext(),customConfigPath);
-    }
-    else{
-      ValueExpression ve=getValueExpression("customConfigPath");
-      if (ve==null){
-        return null;
-      }
-      if (ve.isLiteralText()){
-        return CoreUtils.resolveResourceURL(getFacesContext(),ve.getExpressionString());
-      }
-      else{
-        return CoreUtils.resolveResourceURL(
-            getFacesContext(),
-            (String) ve.getValue(getFacesContext().getELContext())
-        );
-      }
-    }
+  public Boolean getDisabled() {
+    return (Boolean) getValueBindingWithDefaultValue("disabled",false);
   }
 
-  public void setCustomConfigPath(String customConfigPath) {
-    this.customConfigPath = customConfigPath;
+  public void setDisabled(Boolean disabled) {
+    this.disabled = disabled;
+  }
+
+  private String getResourceURLFromValueBinding(String name){
+    Field field= null;
+    try {
+      field = KindEditor.class.getDeclaredField(name);
+      String fieldValue= (String) field.get(this);
+      if (fieldValue!=null){
+        return CoreUtils.resolveResourceURL(getFacesContext(),fieldValue);
+      }
+      else{
+        ValueExpression ve=getValueExpression(fieldValue);
+        if (ve==null){
+          return null;
+        }
+        if (ve.isLiteralText()){
+          return CoreUtils.resolveResourceURL(getFacesContext(),ve.getExpressionString());
+        }
+        else{
+          return CoreUtils.resolveResourceURL(
+              getFacesContext(),
+              (String) ve.getValue(getFacesContext().getELContext())
+          );
+        }
+      }
+    } catch(Exception e) {
+      log.fatal("fatal error when get resource URL for"+name+":"+e.getMessage());
+      e.printStackTrace();
+      return null;
+    }
+
+  }
+
+  public Boolean getUsingJQueryExt() {
+    return usingJQueryExt;
+  }
+
+  public void setUsingJQueryExt(Boolean usingJQueryExt) {
+    this.usingJQueryExt = usingJQueryExt;
+  }
+
+  public String getExtConfigPath() {
+    return getResourceURLFromValueBinding("extConfigPath");
+  }
+
+  public void setExtConfigPath(String extConfigPath) {
+    this.extConfigPath = extConfigPath;
+  }
+
+  public Boolean getHadCalledJavascript() {
+    return hadCalledJavascript;
+  }
+
+  public void setHadCalledJavascript(Boolean hadCalledJavascript) {
+    this.hadCalledJavascript = hadCalledJavascript;
   }
 
   @Override
   public void decode(FacesContext context) {
     Map map = context.getExternalContext().getRequestParameterMap();
     String clientId = getClientId(context);
-    if (map.containsKey(clientId+"editor")) {
-      String newValue = map.get(clientId+"editor").toString().replace('\n', ' ');//将value中的回车替换为空格
+    if (map.containsKey(getId())) {
+      String newValue = map.get(getId()).toString().replace('\n', ' ');//将value中的回车替换为空格
       setSubmittedValue(newValue);
     }
     super.decode(context);
@@ -306,6 +350,8 @@ public class KindEditor extends UIInput {
     values[4]=rows;
     values[5]=skin;
     values[6]=items;
+    values[7]=disabled;
+//    values[8]=saveOnSubmit;
     return values;
   }
 
@@ -319,6 +365,8 @@ public class KindEditor extends UIInput {
     rows= (String) values[4];
     skin= (String) values[5];
     items= (String) values[6];
+    disabled= (Boolean) values[7];
+//    saveOnSubmit= (Boolean) values[8];
   }
 }
 class KindEditorJarResource extends JarResource{

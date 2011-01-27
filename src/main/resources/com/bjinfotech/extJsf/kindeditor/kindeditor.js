@@ -7,7 +7,6 @@
 * @licence LGPL(http://www.opensource.org/licenses/lgpl-license.php)
 * @version 3.5.2 (2010-12-02)
 *******************************************************************************/
-
 (function (undefined) {
 
 var KE = {};

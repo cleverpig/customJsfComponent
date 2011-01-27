@@ -25,3 +25,26 @@ TODO：
   kindEditor组件：可以装载相关javascript和相关css、图片资源
 TODO:
   加上提交按钮，显示编辑的html内容
+  上传图片文件
+
+2011-01-25
+finished basic features without upload:
+add:
+  kindEditor component's id attribute
+  add external javascript config file:kindeditor-config.js
+  finish 3 type form for render kindeditor:
+    1.direct call javascript;
+    2.call javascript via exnternal javascript config file(kindeditor-config.js)
+    3.form config with compoent attributes and call javascript
+  add submit button and actionHandler,to show how to get submitted data and show them.
+  looking more at page:kindeditor-ext.xhtml
+
+fix:
+  after submitted,kindeditor display content will be lost,
+  so I'd fetched hidden textarea value back to it manually with KE.html function.
+
+2011-01-26
+add:
+  KindEditorRenderer would escape HTML when generated Serverside DOM;
+  import encoder.js which will be the responsiblity for convertion between normal HTML and escaped HTML;
+
