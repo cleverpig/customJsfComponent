@@ -48,3 +48,10 @@ add:
   KindEditorRenderer would escape HTML when generated Serverside DOM;
   import encoder.js which will be the responsiblity for convertion between normal HTML and escaped HTML;
 
+2011-01-27
+add:uploadService,uploadJsonServlet & FileManagerService,FileManagerJsonServlet.kindeditor-ext.xhtml had supported fileupload and fileManager.
+these servlets implementation refering to the offical jsp-upload and jsp-fileManager implementation which KindEditor provided.
+
+
+
+
