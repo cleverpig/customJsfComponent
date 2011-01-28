@@ -16,3 +16,13 @@ config.items=['undo', 'redo', 'print', 'cut', 'copy', 'paste',
   'title', 'fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold',
   'italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',
   'flash', 'media', 'advtable', 'hr', 'emoticons', 'link', 'unlink'];
+
+var basic_edit=new Object();
+basic_edit.height='300px';
+basic_edit.width='400px';
+basic_edit.skinType='default';
+basic_edit.items=[
+    'undo', 'redo', 'print', 'cut', 'copy', 'paste','plainpaste', 'wordpaste', '|',
+    'justifyleft', 'justifycenter', 'justifyright','justifyfull','|','image','-',
+    'title', 'fontname', 'fontsize','|','textcolor', 'bgcolor', 'bold','italic', 'underline', 'strikethrough', 'removeformat'
+  ];

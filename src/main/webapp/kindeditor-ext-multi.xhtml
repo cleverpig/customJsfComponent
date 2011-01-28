@@ -14,20 +14,26 @@
 <body>
 
 <f:view>
-  <ice:form id="form" partialSubmit="true" onsubmit="javascript:KE.util.setData('editor');">
+  <ice:form id="form" partialSubmit="true"
+            onsubmit="javascript:KE.util.setData('editor01');KE.util.setData('editor02');">
     <ice:panelGrid>
-      <b:kindeditor id="editor"
+      <b:kindeditor id="editor01"
                     extConfigPath="js/kindeditor-config.js"
-                    configProfile="basic_edit"
-                    required="true"
-                    value="#{KEDemo.editContent}"
+                    configProfile="config"
+                    value="#{MultiKEDemo.editContent01}"
               >
       </b:kindeditor>
-      <ice:commandButton actionListener="#{KEDemo.submitActionListener}" value="submit"/>
+      <b:kindeditor id="editor02"
+                    extConfigPath="js/kindeditor-config.js"
+                    configProfile="basic_edit"
+                    value="#{MultiKEDemo.editContent02}"
+              >
+      </b:kindeditor>
+      <ice:commandButton actionListener="#{MultiKEDemo.submitActionListener}" value="submit"/>
     </ice:panelGrid>
     <ice:panelGrid>
       <ice:outputText value="submitted html content:"></ice:outputText>
-      <ice:outputHtml id="outHtml">#{KEDemo.htmlContent}</ice:outputHtml>
+      <ice:outputHtml id="outHtml">#{MultiKEDemo.htmlContent}</ice:outputHtml>
     </ice:panelGrid>
   </ice:form>
 </f:view>

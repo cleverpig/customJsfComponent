@@ -67,18 +67,19 @@ public class KindEditor extends UIInput {
   private Boolean usingJQueryExt =false; //using jQuery javascript framework?
   private String extConfigPath;
   private Boolean disabled = null;
-  private Boolean hadCalledJavascript;
+//  private Boolean hadCalledJavascript;
+  private String configProfile;
 
   private static final String JQUERY_FRAMEWORK_JS ="com/bjinfotech/extJsf/jquery/jquery.js" ;//jQuery framework
   private static final String ENCODER_TOOL_JS ="com/bjinfotech/extJsf/encoder/encoder.js" ; //this is a javascript encode/decode library:http://www.strictly-software.com/htmlencode
   private static final String KIND_EDITOR_JQUERY_EXT_JS ="com/bjinfotech/extJsf/kindeditor/kindeditor-jquery-ext.js" ;//kindeditor config & call function with jQuery and Encoder library's power
-
+  private static final String DEFAULT_CONFIG_PROFILE="config";
 
   public KindEditor() {
     instanceExist =true;
     baseURI=null;
     setRendererType(KIND_EDITOR_COMPONENT_RENDER_TYPE);
-    hadCalledJavascript=false;
+//    hadCalledJavascript=false;
   }
 
   /**
@@ -153,6 +154,9 @@ public class KindEditor extends UIInput {
   private static final Resource KIND_EDITOR_RESOURCE=new KindEditorJarResource(KIND_EDITOR_JS);
 
   public void loadJavaScript(){
+    if (extConfigPath!=null && extConfigPath.length()>0){
+          usingJQueryExt=true;
+    }
     if (FacesContext.getCurrentInstance()!=null && baseURI==null && instanceExist){
       ResourceRegistry registry= (ResourceRegistry) FacesContext.getCurrentInstance();
 
@@ -160,10 +164,6 @@ public class KindEditor extends UIInput {
         baseURI=registry.loadJavascriptCode(KIND_EDITOR_RESOURCE,KIND_EDITOR_LINKED_BASE);
         log.debug("baseURI:"+baseURI);
 
-        if (extConfigPath!=null && extConfigPath.length()>0){
-          usingJQueryExt=true;
-//          JavascriptContext.includeLib(getExtConfigPath(),FacesContext.getCurrentInstance());
-        }
         if (usingJQueryExt){
           registry.loadJavascriptCode(new KindEditorJarResource(JQUERY_FRAMEWORK_JS));
           registry.loadJavascriptCode(new KindEditorJarResource(ENCODER_TOOL_JS));
@@ -321,12 +321,21 @@ public class KindEditor extends UIInput {
     this.extConfigPath = extConfigPath;
   }
 
-  public Boolean getHadCalledJavascript() {
-    return hadCalledJavascript;
+//  public Boolean getHadCalledJavascript() {
+//    return hadCalledJavascript;
+//  }
+
+//  public void setHadCalledJavascript(Boolean hadCalledJavascript) {
+//    this.hadCalledJavascript = hadCalledJavascript;
+//  }
+
+
+  public String getConfigProfile() {
+    return (String) getValueBindingWithDefaultValue("configProfile",DEFAULT_CONFIG_PROFILE);
   }
 
-  public void setHadCalledJavascript(Boolean hadCalledJavascript) {
-    this.hadCalledJavascript = hadCalledJavascript;
+  public void setConfigProfile(String configProfile) {
+    this.configProfile = configProfile;
   }
 
   @Override

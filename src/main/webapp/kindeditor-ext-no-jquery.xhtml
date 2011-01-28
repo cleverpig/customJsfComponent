@@ -22,7 +22,7 @@
                       value="#{KEDemo.editContent}"
                 >
         </b:kindeditor>
-        <ice:commandButton action="#{KEDemo.submitActionHandler}" value="submit"/>
+        <ice:commandButton actionListener="#{KEDemo.submitActionListener}" value="submit"/>
       </ice:panelGrid>
       <ice:panelGrid>
         <ice:outputText value="submitted html content:"></ice:outputText>

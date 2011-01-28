@@ -52,6 +52,7 @@ add:
 add:uploadService,uploadJsonServlet & FileManagerService,FileManagerJsonServlet.kindeditor-ext.xhtml had supported fileupload and fileManager.
 these servlets implementation refering to the offical jsp-upload and jsp-fileManager implementation which KindEditor provided.
 
+add:mulit-kindeditor demo application:kindeditor-ext-mulit.xhtml and it's backingBean:MultiKindEditorDemo.
 
 
 

@@ -94,14 +94,14 @@ public class KindEditorRenderer extends DomBasicInputRenderer {
       //优先使用外部配置文件
       else if (ke.getExtConfigPath()!=null && ke.getExtConfigPath().length()>0){
         JavascriptContext.includeLib(ke.getExtConfigPath(),context);
-
+        String configProfile=ke.getConfigProfile();
         JavascriptContext.addJavascriptCall(
             context,
-            "config.editorId='"+editorId+"';\n" +
-                "config.baseURL='"+scriptPath+"';\n" +
-                "config.contextPath='"+contextPath+"',\n" +
-                "config.htmlContent=\""+htmlContentEscaped+"\";\n" +
-                "new KindEditorExt(config).setupWhenDocumentIsReady();");
+            configProfile+".editorId='"+editorId+"';\n" +
+                configProfile+".baseURL='"+scriptPath+"';\n" +
+                configProfile+".contextPath='"+contextPath+"',\n" +
+                configProfile+".htmlContent=\""+htmlContentEscaped+"\";\n" +
+                "new KindEditorExt("+configProfile+").setupWhenDocumentIsReady();");
       }
       //使用页面中的组件属性值构造配置
       else{
