@@ -109,6 +109,38 @@
     <url-pattern>/uploadHtml</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>uploadJsonServlet4KindEditor</servlet-name>
+    <servlet-class>com.bjinfotech.extJsf.servlet.UploadJsonServlet</servlet-class>
+    <init-param>
+      <param-name>saveDir</param-name>
+      <param-value>attached</param-value>
+    </init-param>
+    <init-param>
+      <param-name>maxFileSize</param-name>
+      <param-value>2097152</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>uploadJsonServlet4KindEditor</servlet-name>
+    <url-pattern>/uploadJson</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>fileManagerJsonServlet4KindEditor</servlet-name>
+    <servlet-class>com.bjinfotech.extJsf.servlet.FileManagerJsonServlet</servlet-class>
+    <init-param>
+      <param-name>fileDir</param-name>
+      <param-value>attached</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fileManagerJsonServlet4KindEditor</servlet-name>
+    <url-pattern>/fileManagerJson</url-pattern>
+  </servlet-mapping>
+
   <!--welcome list-->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

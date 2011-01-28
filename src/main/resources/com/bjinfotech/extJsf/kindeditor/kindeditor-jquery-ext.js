@@ -9,12 +9,13 @@ jQuery.noConflict();//jQuery can working with other library:http://docs.jquery.c
 
 KindEditorConfig=Class.create();
 KindEditorConfig.prototype={
-  initialize:function(editorId,baseURL,height,width,skinType,items,htmlContent){
+  initialize:function(editorId,baseURL,height,width,skinType,contextPath,items,htmlContent){
     this.editorId=editorId;
     this.baseURL=baseURL;
     this.height=height;
     this.width=width;
     this.skinType=skinType;
+    this.contextPath=contextPath;
     this.items=items;
     this.htmlContent=htmlContent;
   }
@@ -23,13 +24,7 @@ KindEditorConfig.prototype={
 KindEditorExt=Class.create();
 KindEditorExt.prototype={
   initialize:function(config){
-    this.editorId=config.editorId;
-    this.baseURL=config.baseURL;
-    this.height=config.height;
-    this.width=config.width;
-    this.skinType=config.skinType;
-    this.items=config.items;
-    this.htmlContent=config.htmlContent;
+    this.config=config;
   },
   setupWhenDocumentIsReady:function(){
     var _self=this;
@@ -43,15 +38,18 @@ KindEditorExt.prototype={
         ;
       }
       KE.init({
-        id:_self.editorId,
-        skinsPath:_self.baseURL+"skins/",
-        pluginsPath:_self.baseURL+"plugins/",
-        height:_self.height,
-        width:_self.width,
-        skinType:_self.skinType,
-        items:_self.items
+        id:_self.config.editorId,
+        skinsPath:_self.config.baseURL+"skins/",
+        pluginsPath:_self.config.baseURL+"plugins/",
+        imageUploadJson:_self.config.contextPath+"/uploadJson",
+        fileManagerJson:_self.config.contextPath+"/fileManagerJson",
+        allowFileManager:true,
+        height:_self.config.height,
+        width:_self.config.width,
+        skinType:_self.config.skinType,
+        items:_self.config.items
       });
-      KE.create(_self.editorId);
+      KE.create(_self.config.editorId);
 //      alert(_self.htmlContent);
 //      alert(Encoder.htmlDecode(_self.htmlContent));
       /**
@@ -60,7 +58,7 @@ KindEditorExt.prototype={
        *    since KindEditorRenderer would escape HTML when generated Serverside DOM.
        *    as you kown,normal HTML code will break or disrupt javascript when it was taken in as param.
        */
-      KE.html(_self.editorId,Encoder.htmlDecode(_self.htmlContent));//take submitted data back to kindeditor
+      KE.html(_self.config.editorId,Encoder.htmlDecode(_self.config.htmlContent));//take submitted data back to kindeditor
     });
   }
 }

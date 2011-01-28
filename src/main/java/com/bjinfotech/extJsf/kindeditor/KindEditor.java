@@ -47,8 +47,8 @@ public class KindEditor extends UIInput {
   private static final String DEFAULT_WIDTH="100%";
   private static final String DEFAULT_HEIGHT="100%";
   private static final String DEFAULT_SKIN="default";
-  private static final String DEFAULT_ROWS="40";
-  private static final String DEFAULT_COLS="40";
+//  private static final String DEFAULT_ROWS="40";
+//  private static final String DEFAULT_COLS="40";
   private static final String DEFAULT_ITEMS=
       "['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',\n" +
       "'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',\n" +
@@ -61,8 +61,8 @@ public class KindEditor extends UIInput {
   private String width;
   private String height;
   private String skin;
-  private String rows;
-  private String cols;
+//  private String rows;
+//  private String cols;
   private String items;
   private Boolean usingJQueryExt =false; //using jQuery javascript framework?
   private String extConfigPath;
@@ -242,21 +242,21 @@ public class KindEditor extends UIInput {
     this.skin = skin;
   }
 
-  public String getRows() {
-    return (String) getValueBindingWithDefaultValue("rows", DEFAULT_ROWS);
-  }
+//  public String getRows() {
+//    return (String) getValueBindingWithDefaultValue("rows", DEFAULT_ROWS);
+//  }
 
-  public void setRows(String rows) {
-    this.rows = rows;
-  }
+//  public void setRows(String rows) {
+//    this.rows = rows;
+//  }
 
-  public String getCols() {
-    return (String) getValueBindingWithDefaultValue("cols", DEFAULT_COLS);
-  }
+//  public String getCols() {
+//    return (String) getValueBindingWithDefaultValue("cols", DEFAULT_COLS);
+//  }
 
-  public void setCols(String cols) {
-    this.cols = cols;
-  }
+//  public void setCols(String cols) {
+//    this.cols = cols;
+//  }
 
   public String getItems() {
     return (String) getValueBindingWithDefaultValue("items", DEFAULT_ITEMS);
@@ -342,16 +342,13 @@ public class KindEditor extends UIInput {
 
   @Override
   public Object saveState(FacesContext context) {
-    Object[] values=new Object[8];
+    Object[] values=new Object[6];
     values[0]=super.saveState(context);
     values[1]=width;
     values[2]=height;
-    values[3]=cols;
-    values[4]=rows;
-    values[5]=skin;
-    values[6]=items;
-    values[7]=disabled;
-//    values[8]=saveOnSubmit;
+    values[3]=skin;
+    values[4]=items;
+    values[5]=disabled;
     return values;
   }
 
@@ -361,12 +358,9 @@ public class KindEditor extends UIInput {
     super.restoreState(context, values[0]);
     width= (String) values[1];
     height= (String) values[2];
-    cols= (String) values[3];
-    rows= (String) values[4];
-    skin= (String) values[5];
-    items= (String) values[6];
-    disabled= (Boolean) values[7];
-//    saveOnSubmit= (Boolean) values[8];
+    skin= (String) values[3];
+    items= (String) values[4];
+    disabled= (Boolean) values[5];
   }
 }
 class KindEditorJarResource extends JarResource{
