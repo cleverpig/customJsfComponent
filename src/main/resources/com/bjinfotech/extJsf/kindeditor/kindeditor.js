@@ -2868,6 +2868,7 @@ KE.create = function(id, mode) {
 	KE.util.addContextmenuEvent(id);
 	KE.util.addNewlineEvent(id);
 	KE.util.addTabEvent(id);
+
 	function setSelectionHandler() {
 		KE.util.setSelection(id);
 	}

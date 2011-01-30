@@ -9,7 +9,7 @@ jQuery.noConflict();//jQuery can working with other library:http://docs.jquery.c
 
 KindEditorConfig=Class.create();
 KindEditorConfig.prototype={
-  initialize:function(editorId,baseURL,height,width,skinType,contextPath,items,htmlContent){
+  initialize:function(editorId,baseURL,height,width,skinType,contextPath,items){
     this.editorId=editorId;
     this.baseURL=baseURL;
     this.height=height;
@@ -17,7 +17,6 @@ KindEditorConfig.prototype={
     this.skinType=skinType;
     this.contextPath=contextPath;
     this.items=items;
-    this.htmlContent=htmlContent;
   }
 };
 
@@ -28,37 +27,32 @@ KindEditorExt.prototype={
   },
   setupWhenDocumentIsReady:function(){
     var _self=this;
+    var undefined;
     jQuery(document).ready(function() {
       //TODO:we must re-create kindeidtor everytime when document DOM was ready?
       //TODO:How to created kindeditor once and change display content when form submitted?
-      try{
-        KE.remove(_self.editorId);
+      //skip re-create when icefaces had shown error messages.
+      if (jQuery('span.iceMsgError').length==0){
+        try{
+          KE.remove(_self.config.editorId);
+        }
+        catch(e){
+          ;
+        }
+        KE.init({
+          id:_self.config.editorId,
+          skinsPath:_self.config.baseURL+"skins/",
+          pluginsPath:_self.config.baseURL+"plugins/",
+          imageUploadJson:_self.config.contextPath+"/uploadJson",
+          fileManagerJson:_self.config.contextPath+"/fileManagerJson",
+          allowFileManager:true,
+          height:_self.config.height,
+          width:_self.config.width,
+          skinType:_self.config.skinType,
+          items:_self.config.items
+        });
+        KE.create(_self.config.editorId);
       }
-      catch(e){
-        ;
-      }
-      KE.init({
-        id:_self.config.editorId,
-        skinsPath:_self.config.baseURL+"skins/",
-        pluginsPath:_self.config.baseURL+"plugins/",
-        imageUploadJson:_self.config.contextPath+"/uploadJson",
-        fileManagerJson:_self.config.contextPath+"/fileManagerJson",
-        allowFileManager:true,
-        height:_self.config.height,
-        width:_self.config.width,
-        skinType:_self.config.skinType,
-        items:_self.config.items
-      });
-      KE.create(_self.config.editorId);
-//      alert(_self.htmlContent);
-//      alert(Encoder.htmlDecode(_self.htmlContent));
-      /**
-       *  note:
-       *    we must call Encoder to convert escaped HTML to normal HTML.
-       *    since KindEditorRenderer would escape HTML when generated Serverside DOM.
-       *    as you kown,normal HTML code will break or disrupt javascript when it was taken in as param.
-       */
-      KE.html(_self.config.editorId,Encoder.htmlDecode(_self.config.htmlContent));//take submitted data back to kindeditor
     });
   }
 }

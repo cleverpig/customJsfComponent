@@ -1,5 +1,9 @@
 package com.bjinfotech.extJsf.backingbean;
 
+import org.apache.commons.lang.StringUtils;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -39,6 +43,23 @@ public class MultiKindEditorsDemo {
   }
 
   public void submitActionListener(ActionEvent event){
-    htmlContent=editContent01+"<br/>"+editContent02;
+    FacesContext context=FacesContext.getCurrentInstance();
+    if (StringUtils.isEmpty(editContent01)){
+      FacesMessage message=new FacesMessage();
+      message.setSummary("editor01 is blank");
+      message.setDetail("editor01 is blank");
+      message.setSeverity(FacesMessage.SEVERITY_ERROR);
+      context.addMessage("form:editor01",message);
+    }
+    if (StringUtils.isEmpty(editContent02)){
+      FacesMessage message=new FacesMessage();
+      message.setSummary("editor02 is blank");
+      message.setDetail("editor02 is blank");
+      message.setSeverity(FacesMessage.SEVERITY_ERROR);
+      context.addMessage("form:editor02",message);
+    }
+    if (context.getMessages("form:editor01").hasNext()==false &&
+        context.getMessages("form:editor02").hasNext()==false)
+      htmlContent=editContent01+"<br/>"+editContent02;
   }
 }

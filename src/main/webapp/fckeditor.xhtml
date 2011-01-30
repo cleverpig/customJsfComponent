@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+<head>
+  <title></title>
+</head>
+<body>
+  <f:view>
+    <ice:form id="form" partialSubmit="true">
+      <ice:inputRichText id="richText" value="#{KEDemo.editContent}" required="true" saveOnSubmit="true">
+         <f:validateLength minimum="1" maximum="10"/>
+      </ice:inputRichText>
+      <ice:message for="richText"/>
+      <ice:commandButton value="submit" actionListener="#{KEDemo.submitActionListener}"/>
+      <ice:outputHtml>#{KEDemo.htmlContent}</ice:outputHtml>
+    </ice:form>
+  </f:view>
+</body>
+</html>

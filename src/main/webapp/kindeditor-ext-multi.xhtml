@@ -20,15 +20,13 @@
       <b:kindeditor id="editor01"
                     extConfigPath="js/kindeditor-config.js"
                     configProfile="config"
-                    value="#{MultiKEDemo.editContent01}"
-              >
-      </b:kindeditor>
+                    value="#{MultiKEDemo.editContent01}"/>
+      <ice:message for="editor01"/>
       <b:kindeditor id="editor02"
                     extConfigPath="js/kindeditor-config.js"
                     configProfile="basic_edit"
-                    value="#{MultiKEDemo.editContent02}"
-              >
-      </b:kindeditor>
+                    value="#{MultiKEDemo.editContent02}"/>
+      <ice:message for="editor02"/>
       <ice:commandButton actionListener="#{MultiKEDemo.submitActionListener}" value="submit"/>
     </ice:panelGrid>
     <ice:panelGrid>

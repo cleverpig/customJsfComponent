@@ -1,9 +1,11 @@
 package com.bjinfotech.extJsf.backingbean;
 
 import com.bjinfotech.extJsf.kindeditor.KindEditor;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -36,10 +38,19 @@ public class KindEditorDemo {
   }
 
   public void submitActionListener(ActionEvent event){
-    FacesContext context = FacesContext.getCurrentInstance();
-//    editContent=context.getExternalContext().getRequestParameterMap().get("editor");
     log.debug("editContent:"+editContent);
-    htmlContent=editContent;
+    FacesContext context = FacesContext.getCurrentInstance();
+    //TODO:we only can validate form submmitted value is not empty,since kindEditor's require attribute didn't work anyway.
+    if(StringUtils.isEmpty(editContent)){
+      FacesMessage message = new FacesMessage();
+      message.setSeverity(FacesMessage.SEVERITY_ERROR);
+      message.setSummary("editor Field is Blank");
+      message.setDetail("editor Field is Blank..");
+      context.addMessage("form:editor",message);
+    }
+    else{
+      htmlContent=editContent;
+    }
   }
 
 

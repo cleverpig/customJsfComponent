@@ -22,7 +22,7 @@ basic_edit.height='300px';
 basic_edit.width='400px';
 basic_edit.skinType='default';
 basic_edit.items=[
-    'undo', 'redo', 'print', 'cut', 'copy', 'paste','plainpaste', 'wordpaste', '|',
+    'source','undo', 'redo', 'print', 'cut', 'copy', 'paste','plainpaste', 'wordpaste', '|',
     'justifyleft', 'justifycenter', 'justifyright','justifyfull','|','image','-',
     'title', 'fontname', 'fontsize','|','textcolor', 'bgcolor', 'bold','italic', 'underline', 'strikethrough', 'removeformat'
   ];

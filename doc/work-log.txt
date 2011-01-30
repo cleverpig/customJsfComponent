@@ -54,5 +54,7 @@ these servlets implementation refering to the offical jsp-upload and jsp-fileMan
 
 add:mulit-kindeditor demo application:kindeditor-ext-mulit.xhtml and it's backingBean:MultiKindEditorDemo.
 
+2011-01-30
+make a workaround version:skip kindeditor's invalid required attribute.
 
 

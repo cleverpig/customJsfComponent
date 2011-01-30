@@ -22,4 +22,13 @@
       <handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
     </component>
   </tag>
+
+  <tag>
+    <tag-name>textarea</tag-name>
+    <component>
+      <component-type>com.bjinfotech.extJsf.MyInputTextarea</component-type>
+      <renderer-type>com.bjinfotech.extJsf.MyInputTextareaRenderer</renderer-type>
+      <handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
+    </component>
+  </tag>
 </facelet-taglib>

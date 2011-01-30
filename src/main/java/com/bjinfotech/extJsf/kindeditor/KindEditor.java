@@ -1,5 +1,6 @@
 package com.bjinfotech.extJsf.kindeditor;
 
+import com.icesoft.faces.component.ext.HtmlInputTextarea;
 import com.icesoft.faces.context.JarResource;
 import com.icesoft.faces.context.Resource;
 import com.icesoft.faces.context.ResourceLinker;
@@ -9,7 +10,9 @@ import com.icesoft.faces.util.CoreUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.el.ELException;
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import java.io.ByteArrayInputStream;
@@ -30,9 +33,10 @@ import java.util.zip.ZipInputStream;
  * User: cleverpig
  * Date: 11-1-24
  * Time: 下午1:31
- * To change this template use File | Settings | File Templates.
+ * TODO:kindeditor's required attribute doesn't work,please use application-level validation to work around.
+ * look more about that,please looking:http://facestutorials.icefaces.org/tutorial/validators-tutorial.html#applevelvalidation
  */
-public class KindEditor extends UIInput {
+public class KindEditor extends HtmlInputTextarea {
   private static Boolean instanceExist =false;
   private static URI baseURI;
   private static final Date lastModified=new Date();
@@ -42,13 +46,12 @@ public class KindEditor extends UIInput {
   public static final String KIND_EDITOR_COMPONENT_TYPE ="com.bjinfotech.extJsf.kindeditor.KindEditor";
   public static final String KIND_EDITOR_COMPONENT_FAMILY ="com.bjinfotech.extJsf.kindeditor.KindeditorFamily";
   public static final String KIND_EDITOR_COMPONENT_RENDER_TYPE ="com.bjinfotech.extJsf.kindeditor.KindEditorRenderer";
+  public static final String REQUIRED_MESSAGE_ID="com.bjinfotech.extJsf.kindeditor.required";
 
   private static final Log log= LogFactory.getLog(KindEditor.class);
   private static final String DEFAULT_WIDTH="100%";
   private static final String DEFAULT_HEIGHT="100%";
   private static final String DEFAULT_SKIN="default";
-//  private static final String DEFAULT_ROWS="40";
-//  private static final String DEFAULT_COLS="40";
   private static final String DEFAULT_ITEMS=
       "['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',\n" +
       "'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',\n" +
@@ -57,29 +60,25 @@ public class KindEditor extends UIInput {
       "'title', 'fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold',\n" +
       "'italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',\n" +
       "'flash', 'media', 'advtable', 'hr', 'emoticons', 'link', 'unlink', '|', 'about']";
-
-  private String width;
-  private String height;
-  private String skin;
-//  private String rows;
-//  private String cols;
-  private String items;
-  private Boolean usingJQueryExt =false; //using jQuery javascript framework?
-  private String extConfigPath;
-  private Boolean disabled = null;
-//  private Boolean hadCalledJavascript;
-  private String configProfile;
-
   private static final String JQUERY_FRAMEWORK_JS ="com/bjinfotech/extJsf/jquery/jquery.js" ;//jQuery framework
   private static final String ENCODER_TOOL_JS ="com/bjinfotech/extJsf/encoder/encoder.js" ; //this is a javascript encode/decode library:http://www.strictly-software.com/htmlencode
   private static final String KIND_EDITOR_JQUERY_EXT_JS ="com/bjinfotech/extJsf/kindeditor/kindeditor-jquery-ext.js" ;//kindeditor config & call function with jQuery and Encoder library's power
   private static final String DEFAULT_CONFIG_PROFILE="config";
 
+  private String width;
+  private String height;
+  private String skin;
+  private String items;
+  private Boolean usingJQueryExt =false; //using jQuery javascript framework?
+  private String extConfigPath;
+  private Boolean disabled = null;
+  private String configProfile;
+
   public KindEditor() {
+    super();
     instanceExist =true;
     baseURI=null;
     setRendererType(KIND_EDITOR_COMPONENT_RENDER_TYPE);
-//    hadCalledJavascript=false;
   }
 
   /**
@@ -218,6 +217,10 @@ public class KindEditor extends UIInput {
     }
   }
 
+  public Object getMutableAttribute(String name,Object defaultValue){
+    Object attributeValue=getAttributes().get(name);
+    return attributeValue==null?defaultValue:attributeValue;
+  }
   public String getWidth() {
     return (String) getValueBindingWithDefaultValue("width", DEFAULT_WIDTH);
   }
@@ -242,22 +245,6 @@ public class KindEditor extends UIInput {
     this.skin = skin;
   }
 
-//  public String getRows() {
-//    return (String) getValueBindingWithDefaultValue("rows", DEFAULT_ROWS);
-//  }
-
-//  public void setRows(String rows) {
-//    this.rows = rows;
-//  }
-
-//  public String getCols() {
-//    return (String) getValueBindingWithDefaultValue("cols", DEFAULT_COLS);
-//  }
-
-//  public void setCols(String cols) {
-//    this.cols = cols;
-//  }
-
   public String getItems() {
     return (String) getValueBindingWithDefaultValue("items", DEFAULT_ITEMS);
   }
@@ -275,8 +262,8 @@ public class KindEditor extends UIInput {
   }
 
   private String getResourceURLFromValueBinding(String name){
-    Field field= null;
     try {
+      Field field= null;
       field = KindEditor.class.getDeclaredField(name);
       String fieldValue= (String) field.get(this);
       if (fieldValue!=null){
@@ -321,15 +308,6 @@ public class KindEditor extends UIInput {
     this.extConfigPath = extConfigPath;
   }
 
-//  public Boolean getHadCalledJavascript() {
-//    return hadCalledJavascript;
-//  }
-
-//  public void setHadCalledJavascript(Boolean hadCalledJavascript) {
-//    this.hadCalledJavascript = hadCalledJavascript;
-//  }
-
-
   public String getConfigProfile() {
     return (String) getValueBindingWithDefaultValue("configProfile",DEFAULT_CONFIG_PROFILE);
   }
@@ -371,7 +349,17 @@ public class KindEditor extends UIInput {
     items= (String) values[4];
     disabled= (Boolean) values[5];
   }
+
+  @Override
+  public void validate(FacesContext context) {
+    //TODO:required value always is false.
+    // there is a possible reason that kindeditor didn't apply onbur event(htmlTextarea could apply).
+    // so required value couldn't be submitted with partial-submit way before form was submitted.
+    log.debug("validate...isRequired="+isRequired());
+    super.validate(context);
+  }
 }
+
 class KindEditorJarResource extends JarResource{
   public KindEditorJarResource(String path) {
     super(path);
