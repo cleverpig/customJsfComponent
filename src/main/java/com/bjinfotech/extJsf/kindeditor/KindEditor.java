@@ -5,15 +5,11 @@ import com.icesoft.faces.context.JarResource;
 import com.icesoft.faces.context.Resource;
 import com.icesoft.faces.context.ResourceLinker;
 import com.icesoft.faces.context.ResourceRegistry;
-import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.util.CoreUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.el.ELException;
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

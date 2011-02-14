@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import static com.bjinfotech.extJsf.servlet.Constants.*;
+import static com.bjinfotech.extJsf.servlet.KindEditorUploadConstants.*;
 /**
  * Created by IntelliJ IDEA.
  * User: cleverpig

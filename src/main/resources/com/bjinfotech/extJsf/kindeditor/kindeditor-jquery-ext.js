@@ -46,6 +46,7 @@ KindEditorExt.prototype={
           imageUploadJson:_self.config.contextPath+"/uploadJson",
           fileManagerJson:_self.config.contextPath+"/fileManagerJson",
           allowFileManager:true,
+          allowUpload:true,
           height:_self.config.height,
           width:_self.config.width,
           skinType:_self.config.skinType,

@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.webapp.UIComponentELTag;
-import javax.faces.webapp.UIComponentTag;
 import static com.bjinfotech.extJsf.Ticker.*;
 /**
  * Created by IntelliJ IDEA.

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ====================================================================== -->
+<!-- Ant build file (http://ant.apache.org/) for Ant 1.6.2 or above.        -->
+<!-- ====================================================================== -->
+
+<project name="customJsfComponent" default="package" basedir="."
+    xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+  <property name="maven-ant-build" value="${basedir}/ant-build" />
+  <property name="jar-support-dir" value="${maven-ant-build}/jar-support"/>
+  <property name="jar-dist-dir" value="${basedir}/dist"/>
+  <path id="maven-ant-tasks.classpath" path="${maven-ant-build}/lib/maven-ant-tasks-2.1.1.jar" />
+  <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+           uri="antlib:org.apache.maven.artifact.ant"
+           classpathref="maven-ant-tasks.classpath" />
+
+  <!-- ====================================================================== -->
+  <!-- Import maven-build.xml into the current project                        -->
+  <!-- ====================================================================== -->
+
+  <import file="maven-build.xml"/>
+
+  <!-- ====================================================================== -->
+  <!-- Help target                                                            -->
+  <!-- ====================================================================== -->
+
+  <target name="help">
+    <echo message="Please run: $ant -projecthelp"/>
+  </target>
+
+  <target name="compile-without-get-deps" description="Compile the code without getting dependencies">
+    <mkdir dir="${maven.build.outputDir}"/>
+    <javac destdir="${maven.build.outputDir}"
+           encoding="UTF-8"
+           nowarn="false"
+           debug="true"
+           optimize="false"
+           deprecation="true"
+           target="1.6"
+           verbose="false"
+           fork="false"
+           source="1.6">
+      <src>
+        <pathelement location="${maven.build.srcDir.0}"/>
+      </src>
+      <classpath refid="build.classpath"/>
+    </javac>
+    <copy todir="${maven.build.outputDir}">
+      <fileset dir="${maven.build.resourceDir.0}"/>
+    </copy>
+  </target>
+
+  <target name="jar-without-get-deps" depends="compile-without-get-deps">
+    <artifact:pom id="pomfile" file="pom.xml" />
+    <echo>The version is ${pomfile.version}</echo>
+    <echo>The artifactId is ${pomfile.artifactId}</echo>
+    <property name="jar.file" value="${pomfile.artifactId}-${pomfile.version}.jar"/>
+    <echo>The jar file name is ${jar.file}</echo>
+    <jar destfile="${jar-dist-dir}/${jar.file}">
+      <fileset dir="${maven.build.outputDir}">
+        <include name="**/*.class"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.zip"/>
+        <include name="**/*.js"/>
+      </fileset>
+      <fileset dir="${jar-support-dir}">
+        <include name="**/*.*"/>
+      </fileset>
+      <manifest>
+        <attribute name="Implementation-Title" value="${pomfile.artifactId}" />
+        <attribute name="Implementation-Version" value="${pomfile.version}" />
+        <attribute name="Implementation-Vendor" value="${pomfile.vendor}" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="jar-with-get-deps" depends="compile">
+    <artifact:pom id="pomfile" file="pom.xml" />
+    <echo>The version is ${pomfile.version}</echo>
+    <echo>The artifactId is ${pomfile.artifactId}</echo>
+    <property name="jar.file" value="${pomfile.artifactId}-${pomfile.version}.jar"/>
+    <echo>The jar file name is ${jar.file}</echo>
+    <jar destfile="${jar-dist-dir}/${jar.file}">
+      <fileset dir="${maven.build.outputDir}">
+        <include name="**/*.class"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.zip"/>
+        <include name="**/*.js"/>
+      </fileset>
+      <fileset dir="${jar-support-dir}">
+        <include name="**/*.*"/>
+      </fileset>
+      <manifest>
+        <attribute name="Implementation-Title" value="${pomfile.artifactId}" />
+        <attribute name="Implementation-Version" value="${pomfile.version}" />
+        <attribute name="Implementation-Vendor" value="${pomfile.vendor}" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="jar-source">
+    <artifact:pom id="pomfile" file="pom.xml" />
+    <echo>The version is ${pomfile.version}</echo>
+    <echo>The artifactId is ${pomfile.artifactId}</echo>
+    <property name="jar-source.file" value="${pomfile.artifactId}-${pomfile.version}-source.jar"/>
+    <echo>The jar file name is ${jar.file}</echo>
+    <jar destfile="${jar-dist-dir}/${jar-source.file}">
+      <fileset dir="${maven.build.srcDir.0}">
+        <include name="**/*.java"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.zip"/>
+        <include name="**/*.js"/>
+      </fileset>
+      <fileset dir="${maven.build.resourceDir.0}">
+        <include name="**/*.*"/>
+      </fileset>
+      <manifest>
+        <attribute name="Implementation-Title" value="${pomfile.artifactId}" />
+        <attribute name="Implementation-Version" value="${pomfile.version}" />
+        <attribute name="Implementation-Vendor" value="${pomfile.vendor}" />
+      </manifest>
+    </jar>
+  </target>
+</project>

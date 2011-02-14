@@ -57,4 +57,10 @@ add:mulit-kindeditor demo application:kindeditor-ext-mulit.xhtml and it's backin
 2011-01-30
 make a workaround version:skip kindeditor's invalid required attribute.
 
+2011-02-14
+remove:some other unusful class such as MyTextField.
+add: ant-build feature provider read pom.xml get necessary information to using ant task to build single jar file for release component.
+fixed: kindeditor's upload plugin's image/image.html & file_manager.js had bug to judge url which included ":" in id param value.
+
+
 

@@ -1,14 +1,15 @@
 package com.bjinfotech.extJsf.kindeditor;
 
 import com.icesoft.faces.component.AttributeConstants;
-import com.icesoft.faces.component.ext.renderkit.TextareaRenderer;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.JavascriptContext;
-import com.icesoft.faces.renderkit.dom_html_basic.*;
+import com.icesoft.faces.renderkit.dom_html_basic.BaseInputRenderer;
+import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
+import com.icesoft.faces.renderkit.dom_html_basic.HTML;
+import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeWriter;
 import com.icesoft.faces.util.DOMUtils;
 import com.icesoft.util.pooling.ClientIdPool;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -17,7 +18,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -125,6 +125,7 @@ public class KindEditorRenderer extends BaseInputRenderer {
               " imageUploadJson:'"+contextPath+"/uploadJson',\n" +
               " fileManagerJson:'"+contextPath+"/fileManagerJson',\n" +
               " allowFileManager:true,\n"+
+              " allowUpload:true,\n"+
               " skinsPath:'"+scriptPath+"skins/',\n"+
               " pluginsPath:'"+scriptPath+"plugins/',\n"+
               " height:'"+ke.getHeight()+"',\n"+
